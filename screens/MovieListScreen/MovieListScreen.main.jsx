@@ -23,6 +23,10 @@ export default function MovieListScreen({ navigation, route }) {
       // TODO: Add a "Filter" button to the right bar button.
       // It should lead to the MovieFilterScreen, and pass the "actors" state
       // variable as a parameter.
+      <Button
+        title="Filter"
+        onPress = { () => navigation.navigate('MovieFilterScreen', {actors})}
+      />
     },
     [
       /* TODO: Insert dependencies here. */
@@ -60,6 +64,13 @@ export default function MovieListScreen({ navigation, route }) {
 
     if (meetsSearchCriteria && meetsActorsCriteria) {
       // TODO: Return a MovieCell, wrapped by a TouchableOpacity so we can handle taps.
+      return (
+        <TouchableOpacity>
+          <MovieCell>
+            
+          </MovieCell>
+        </TouchableOpacity>
+      );
     } else {
       // If the item doesn't meet search/filter criteria, then we can
       // simply return null and it won't be rendered in the list!
@@ -73,6 +84,11 @@ export default function MovieListScreen({ navigation, route }) {
     <SafeAreaView style={styles.container}>
       {/* TODO: Add a SearchBar: https://reactnativeelements.com/docs/searchbar/.
                 The third-party package should already be installed for you. */}
+      <SearchBar
+        placeholder="what movie?"
+        //onChangeText={setSearch({/* what is currently in search bar */})}
+        value={search}
+      />
       {/* TODO: Add a FlatList: https://reactnative.dev/docs/flatlist */}
     </SafeAreaView>
   );

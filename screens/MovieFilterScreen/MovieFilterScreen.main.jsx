@@ -24,6 +24,7 @@ export default function MovieFilterScreen({ navigation, route }) {
     () => {
       // TODO: Recieve actors passed by MovieListScreen here, and update
       // our local state using setActors.
+      setActors(route.params)
     },
     [
       /* TODO: Insert dependent variables here. */
