@@ -19,7 +19,7 @@ export default function MovieFilterScreen({ navigation, route }) {
   const [actors, setActors] = useState([]);
 
   // TODO: Destructure navigation params from props.
-  const {filteredActors} = route.params
+  const {filteredActors} = route.params;
 
   useEffect(
     () => {
@@ -45,11 +45,9 @@ export default function MovieFilterScreen({ navigation, route }) {
           <Button
             title="Done"
             onPress={() => {
-              navigation.navigate({
-                name: "Movies",
-                params: {filteredActors: actors},
-                merge: true
-              })
+              navigation.navigate("MovieListScreen",
+                {filteredActors: actors}
+              )
             }}
           />
         )
@@ -57,6 +55,7 @@ export default function MovieFilterScreen({ navigation, route }) {
     },
     [
       /* TODO: Insert dependent state variables here. */
+      actors
     ]
   );
 

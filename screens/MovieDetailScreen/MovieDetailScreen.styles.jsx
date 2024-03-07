@@ -36,4 +36,9 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     textAlign: "center",
   },
+  movieCellImage: { 
+    height: 200, 
+    width: 135,
+    alignSelf: "center",
+  },
 });

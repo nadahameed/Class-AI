@@ -20,14 +20,7 @@ export default function MovieListScreen({ navigation, route }) {
   };
 
   const selectedFilterButton = () => {
-    navigation.setOptions({
-      headerRight: () => (
-        <Button
-          onPress={navigation.navigate('MovieFilterScreen', {actors})}
-          title="Filter"
-        />
-      )
-    })
+    navigation.navigate('MovieFilterScreen', {filteredActors: actors})
     //navigation.navigate('MovieFilterScreen', {actors});
   };
 
@@ -36,7 +29,14 @@ export default function MovieListScreen({ navigation, route }) {
       // TODO: Add a "Filter" button to the right bar button.
       // It should lead to the MovieFilterScreen, and pass the "actors" state
       // variable as a parameter.
-      selectedFilterButton
+      navigation.setOptions({
+        headerRight: () => (
+          <Button
+            onPress={selectedFilterButton}
+            title="Filter"
+          />
+        )
+      })
     },
     [
       /* TODO: Insert dependencies here. */
@@ -50,7 +50,7 @@ export default function MovieListScreen({ navigation, route }) {
           for an example of how to send data BACKWARDS in the navigation stack.
       */
       if (route.params?.filteredActors) {
-        setActors(rooute.params.filteredActors)
+        setActors(route.params.filteredActors)
       }
     },
     [
