@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, FlatList, Button, TouchableOpacity } from "react-native";
+import { SafeAreaView, FlatList, Button, TouchableOpacity, Text } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { MovieCell } from "./components/MovieCell";
 import { styles } from "./MovieListScreen.styles";
+import MovieDetailScreen from "../MovieDetailScreen/MovieDetailScreen.main";
 
 // We can use JSON files by simply requiring them.
 const TABLE_DATA = require("../../assets/movies.json");
@@ -14,19 +15,28 @@ export default function MovieListScreen({ navigation, route }) {
   const [actors, setActors] = useState([]);
 
   // TODO: Fill out the methods below.
-  const selectedMovie = (movieItem) => {};
+  const selectedMovie = (movieItem) => {
+    navigation.navigate('MovieDetailScreen', {movie: movieItem});
+  };
 
-  const selectedFilterButton = () => {};
+  const selectedFilterButton = () => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button
+          onPress={navigation.navigate('MovieFilterScreen', {actors})}
+          title="Filter"
+        />
+      )
+    })
+    //navigation.navigate('MovieFilterScreen', {actors});
+  };
 
   useEffect(
     () => {
       // TODO: Add a "Filter" button to the right bar button.
       // It should lead to the MovieFilterScreen, and pass the "actors" state
       // variable as a parameter.
-      <Button
-        title="Filter"
-        onPress = { () => navigation.navigate('MovieFilterScreen', {actors})}
-      />
+      selectedFilterButton
     },
     [
       /* TODO: Insert dependencies here. */
@@ -39,10 +49,14 @@ export default function MovieListScreen({ navigation, route }) {
           See https://reactnavigation.org/docs/params/#passing-params-to-a-previous-screen
           for an example of how to send data BACKWARDS in the navigation stack.
       */
+      if (route.params?.filteredActors) {
+        setActors(rooute.params.filteredActors)
+      }
     },
     [
       /* TODO: Insert dependencies here. What variable changes 
         when we come back from the filter screen? */
+      route.params?.filteredActors
     ]
   );
 
@@ -60,15 +74,19 @@ export default function MovieListScreen({ navigation, route }) {
 
     // TODO: Set up search & filter criteria.
     let meetsSearchCriteria = true;
+    if (!item.title.toLowerCase().includes(search.toLowerCase())) {
+      meetsSearchCriteria = false;
+    }
     let meetsActorsCriteria = true;
+    if (actors.length > 0) {
+      meetsActorsCriteria = overlapFound(actors, item.actors);
+    }
 
     if (meetsSearchCriteria && meetsActorsCriteria) {
       // TODO: Return a MovieCell, wrapped by a TouchableOpacity so we can handle taps.
       return (
-        <TouchableOpacity>
-          <MovieCell>
-            
-          </MovieCell>
+        <TouchableOpacity onPress={() => selectedMovie(item)}>
+          <MovieCell movieItem={item}></MovieCell>
         </TouchableOpacity>
       );
     } else {
@@ -86,10 +104,14 @@ export default function MovieListScreen({ navigation, route }) {
                 The third-party package should already be installed for you. */}
       <SearchBar
         placeholder="what movie?"
-        //onChangeText={setSearch({/* what is currently in search bar */})}
+        onChangeText={(x) => setSearch(x)} //x can be anything it actually does not matter
         value={search}
       />
       {/* TODO: Add a FlatList: https://reactnative.dev/docs/flatlist */}
+      <FlatList
+        data={TABLE_DATA}
+        renderItem={renderItem}
+      />
     </SafeAreaView>
   );
 }
