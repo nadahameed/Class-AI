@@ -6,7 +6,12 @@ export const StudentCell = ({ movieItem }) => {
 
   return (
     <View style={styles.studentCell}>
-      <Text style={styles.studentCellTitle}>{movieItem.students}</Text>
+      <View style={styles.classCellLeft}>
+        <Image source={{ uri: movieItem.srcPath }} style={classCellLeft} />
+      </View>
+      <View style={styles.classCellRight}>
+        <Text style={styles.studentCellTitle}>{movieItem.name}</Text>
+      </View>
     </View>
   );
 };

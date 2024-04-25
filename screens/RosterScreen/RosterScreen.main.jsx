@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView, FlatList, Button, TouchableOpacity, Text } from "react-native";
 import { StudentCell } from "./components/StudentCell";
 import { styles } from "./RosterScreen.styles";
+import firebase from "firebase/compat/app";
+import { limitToLast } from "firebase/firestore";
+import { ActivityIndicator } from "react-native-web";
+import { render } from "react-dom";
 
 // We can use JSON files by simply requiring them.
 const TABLE_DATA = require("../../assets/classes.json");
@@ -10,6 +14,8 @@ const TABLE_DATA = require("../../assets/classes.json");
 // Output: a screen containing the list of movies
 export default function MovieListScreen({ navigation, route }) {
   const [search, setSearch] = useState("");
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [actors, setActors] = useState([]);
   // const movieItem = route.params.movieItem;
   const className = route.params.classItem;
@@ -38,6 +44,30 @@ export default function MovieListScreen({ navigation, route }) {
     ]
   );
 
+  useEffect(() => {
+    const subscriber = firebase.firestore()
+      .collection(className.name)
+      .onSnapshot(querySnapshot => {
+        const students = [];
+  
+        querySnapshot.forEach(documentSnapshot => {
+          students.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+  
+        setStudents(students);
+        setLoading(false);
+      });
+  
+    // Unsubscribe from events when no longer in use
+    return () => subscriber();
+  }, []);
+
+  // if (loading) {
+  //   return <ActivityIndicator />
+  // }
 
   // Renders a row of the FlatList.
   const renderItem = ({ item }) => {
@@ -55,7 +85,7 @@ export default function MovieListScreen({ navigation, route }) {
                 The third-party package should already be installed for you. */}
       {/* TODO: Add a FlatList: https://reactnative.dev/docs/flatlist */}
       <FlatList
-        data={TABLE_DATA}
+        data={students}
         renderItem={renderItem}
       />
     </SafeAreaView>

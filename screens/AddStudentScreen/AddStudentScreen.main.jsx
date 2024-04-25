@@ -31,9 +31,14 @@ export default function AddStudentScreen({ navigation, route }) {
       const studentData = {
         name: name,
         image: name + ".jpg",
+        srcPath: image
       };
-      await firebase.firestore().collection(className).add(studentData);
-      console.log("Student added successfully");
+      if (name != '' || srcPath != '(null)') {
+        console.log(srcPath + "sdalskj");
+        await firebase.firestore().collection(className).add(studentData);
+        console.log("Student added successfully");
+      }
+  
     } catch (error) {
       console.log(error);
       alert(`Failed to add student: ${error}`);
@@ -44,7 +49,7 @@ export default function AddStudentScreen({ navigation, route }) {
   const handleImagePickerPress = async () => {
     const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
     if (permissionResult.granted === false) {
-      alert("You've refused to allow this appp to access your camera!");
+      alert("You've refused to allow this app to access your camera!");
       return;
     }
     let result = await ImagePicker.launchCameraAsync({
@@ -56,7 +61,6 @@ export default function AddStudentScreen({ navigation, route }) {
     setImage(result.assets[0].uri);
     console.log(image);
     uploadMedia();
-    addStudent();
   }
 
   const uploadMedia = async () => {
@@ -79,11 +83,13 @@ export default function AddStudentScreen({ navigation, route }) {
     });
     const filename = name + ".jpg";
     setSrcPath(filename);
+
     const ref = firebase.storage().ref().child(filename);
 
     await ref.put(blob);
     setUploading(false);
     alert("Upload successful");
+    addStudent();
     setImage("");
   } catch (error) {
     console.log(error);
