@@ -3,8 +3,10 @@ import React from "react";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ClassesScreen from "./screens/ClassesScreen/ClassesScreen.main";
 import RosterScreen from "./screens/RosterScreen/RosterScreen.main";
+import CameraScreen from "./screens/CameraScreen/CameraScreen.main";
 import AddStudentScreen from "./screens/AddStudentScreen/AddStudentScreen.main";
 
 
@@ -24,15 +26,24 @@ import AddStudentScreen from "./screens/AddStudentScreen/AddStudentScreen.main";
   https://reactnavigation.org/docs/modal */
 export default function App() {
   const Stack = createStackNavigator();
+  const Tab = createBottomTabNavigator();
+
+  function MainTabNavigator() {
+    return (
+      <Tab.Navigator>
+        <Tab.Screen name="Classes" component={ClassesScreen} />
+        <Tab.Screen name="Roster" component={RosterScreen} />
+        <Tab.Screen name="Camera" component={CameraScreen} />
+      </Tab.Navigator>
+    );
+  }
+
   return <NavigationContainer>{
     <Stack.Navigator>
-      <Stack.Group>
-        <Stack.Screen name="ClassesScreen" component={ClassesScreen} />
-        <Stack.Screen name="RosterScreen" component={RosterScreen} />
-      </Stack.Group>
+      <Stack.Screen name="Home" component={MainTabNavigator} options={{ headerShown: false }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}> 
       {/* presentation: modal means that all screens in this group will have top to bottom animations */}
-        <Stack.Screen name="AddStudentScreen" component={AddStudentScreen} />
+        <Stack.Screen name="AddStudent" component={AddStudentScreen} />
       </Stack.Group>
     </Stack.Navigator>
     }</NavigationContainer>;
