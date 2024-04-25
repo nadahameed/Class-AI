@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
     backgroundColor: "#ffffff",
   },
-  movieCell: {
+  classCell: {
     backgroundColor: "#ecf0f1",
     padding: 20,
     flexDirection: "row",
@@ -22,11 +22,10 @@ export const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  movieCellTitle: { fontFamily: "Avenir", fontSize: 22 },
-  movieCellSubtitle: { fontFamily: "Avenir", fontSize: 14 },
-  movieCellLeft: { height: 80, width: 54 },
-  movieCellImage: { height: 80, width: 54, resizeMode: "contain" },
-  movieCellRight: {
+  classCellTitle: { fontFamily: "Avenir", fontSize: 30 },
+  classCellLeft: { height: 80, width: 54 },
+  classCellImage: { height: 80, width: 54, resizeMode: "contain" },
+  classCellRight: {
     flex: 1,
     marginLeft: 20,
     justifyContent: "center",

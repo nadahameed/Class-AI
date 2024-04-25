@@ -3,10 +3,10 @@ import React from "react";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import MovieListScreen from "./screens/MovieListScreen/MovieListScreen.main";
-import MovieDetailScreen from "./screens/MovieDetailScreen/MovieDetailScreen.main";
-import MovieFilterScreen from "./screens/MovieFilterScreen/MovieFilterScreen.main";
+import ClassesScreen from "./screens/ClassesScreen/ClassesScreen.main";
+import RosterScreen from "./screens/RosterScreen/RosterScreen.main";
 import AddStudentScreen from "./screens/AddStudentScreen/AddStudentScreen.main";
+
 
 /* TODO: 
 
@@ -27,8 +27,8 @@ export default function App() {
   return <NavigationContainer>{
     <Stack.Navigator>
       <Stack.Group>
-        <Stack.Screen name="MovieListScreen" component={MovieListScreen} />
-        <Stack.Screen name="MovieDetailScreen" component={MovieDetailScreen} />
+        <Stack.Screen name="ClassesScreen" component={ClassesScreen} />
+        <Stack.Screen name="RosterScreen" component={RosterScreen} />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'modal' }}> 
       {/* presentation: modal means that all screens in this group will have top to bottom animations */}
