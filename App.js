@@ -6,6 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import MovieListScreen from "./screens/MovieListScreen/MovieListScreen.main";
 import MovieDetailScreen from "./screens/MovieDetailScreen/MovieDetailScreen.main";
 import MovieFilterScreen from "./screens/MovieFilterScreen/MovieFilterScreen.main";
+import AddStudentScreen from "./screens/AddStudentScreen/AddStudentScreen.main";
 
 /* TODO: 
 
@@ -31,7 +32,7 @@ export default function App() {
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'modal' }}> 
       {/* presentation: modal means that all screens in this group will have top to bottom animations */}
-        <Stack.Screen name="MovieFilterScreen" component={MovieFilterScreen} />
+        <Stack.Screen name="AddStudentScreen" component={AddStudentScreen} />
       </Stack.Group>
     </Stack.Navigator>
     }</NavigationContainer>;

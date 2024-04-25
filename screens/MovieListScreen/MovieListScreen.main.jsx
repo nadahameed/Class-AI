@@ -10,7 +10,7 @@ const TABLE_DATA = require("../../assets/movies.json");
 
 // Input: navigation & route params, which we recieve through React Navigation
 // Output: a screen containing the list of movies
-export default function MovieListScreen({ navigation, route }) {
+export default function MovieListScreen({ navigation }) {
   const [search, setSearch] = useState("");
   const [actors, setActors] = useState([]);
 
@@ -20,7 +20,7 @@ export default function MovieListScreen({ navigation, route }) {
   };
 
   const selectedFilterButton = () => {
-    navigation.navigate('MovieFilterScreen', {filteredActors: actors})
+    navigation.navigate('AddStudentScreen')
     //navigation.navigate('MovieFilterScreen', {actors});
   };
 
@@ -43,22 +43,6 @@ export default function MovieListScreen({ navigation, route }) {
     ]
   );
 
-  useEffect(
-    () => {
-      /* TODO: Recieve the updated list of actors from the filter screen here. 
-          See https://reactnavigation.org/docs/params/#passing-params-to-a-previous-screen
-          for an example of how to send data BACKWARDS in the navigation stack.
-      */
-      if (route.params?.filteredActors) {
-        setActors(route.params.filteredActors)
-      }
-    },
-    [
-      /* TODO: Insert dependencies here. What variable changes 
-        when we come back from the filter screen? */
-      route.params?.filteredActors
-    ]
-  );
 
   // Renders a row of the FlatList.
   const renderItem = ({ item }) => {
