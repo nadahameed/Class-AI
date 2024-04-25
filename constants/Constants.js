@@ -1,12 +1,12 @@
-const movies = require("../assets/movies.json");
+const classes = require("../assets/classes.json");
 
 // This function returns a sorted list of all actors in our movie dataset.
-export function getAllActors() {
-  let actors = new Set();
-  movies.forEach((movie) => {
-    movie.actors.forEach((actor) => {
-      actors.add(actor);
+export function getAllStudents() {
+  let students = new Set();
+  classes.forEach((c) => {
+    c.students.forEach((student) => {
+      students.add(student);
     });
   });
-  return Array.from(actors).sort();
+  return Array.from(students).sort();
 }
